@@ -17,6 +17,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	app.TamplateCashe = tc
+	render.NewTemplate(&app)
 	http.HandleFunc("/", handler.Home)
 	http.HandleFunc("/about", handler.About)
 	url := "127.0.0.1:8080"

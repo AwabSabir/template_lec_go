@@ -2,13 +2,19 @@ package render
 
 import (
 	"bytes"
+	"html/template"
+	"lec_1/pkg/config"
 	"log"
 	"net/http"
 	"path/filepath"
-	"text/template"
 )
 
 var functions = template.FuncMap{}
+var app *config.AppConfig
+
+func NewTemplate(a *config.AppConfig) {
+	app = a
+}
 
 func RenderTemplate(w http.ResponseWriter, temp string) {
 	tc, err := CreateTemplateCash()
