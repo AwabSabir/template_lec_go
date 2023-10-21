@@ -17,19 +17,17 @@ func NewTemplate(a *config.AppConfig) {
 }
 
 func RenderTemplate(w http.ResponseWriter, temp string) {
-	tc, err := CreateTemplateCash()
-	if err != nil {
-		log.Fatal(err)
-	}
+	tc := app.TamplateCashe
+
 	t, ok := tc[temp]
 	if !ok {
-		log.Fatal(err)
+		log.Fatal("Colud not create Template")
 	}
 
 	buf := new(bytes.Buffer)
 	_ = t.Execute(buf, nil)
 
-	_, err = buf.WriteTo(w)
+	_, err := buf.WriteTo(w)
 	if err != nil {
 		log.Fatal(err)
 	}
