@@ -17,9 +17,13 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	app.TamplateCashe = tc
+	app.UseCache = false
+	repo := handler.NewRepo(&app)
+	handler.NewHandler(repo)
+
 	render.NewTemplate(&app)
-	http.HandleFunc("/", handler.Home)
-	http.HandleFunc("/about", handler.About)
+	http.HandleFunc("/", handler.Repo.Home)
+	http.HandleFunc("/about", handler.Repo.About)
 	url := "127.0.0.1:8080"
 	_ = http.ListenAndServe(url, nil)
 }

@@ -17,8 +17,12 @@ func NewTemplate(a *config.AppConfig) {
 }
 
 func RenderTemplate(w http.ResponseWriter, temp string) {
-	tc := app.TamplateCashe
-
+	var tc map[string]*template.Template
+	if app.UseCache {
+		tc = app.TamplateCashe
+	} else {
+		tc, _ = CreateTemplateCash()
+	}
 	t, ok := tc[temp]
 	if !ok {
 		log.Fatal("Colud not create Template")

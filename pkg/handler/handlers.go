@@ -18,9 +18,13 @@ func NewRepo(a *config.AppConfig) *Repostory {
 	}
 }
 
-func Home(w http.ResponseWriter, r *http.Request) {
+func NewHandler(r *Repostory) {
+	Repo = r
+}
+
+func (m *Repostory) Home(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "home.page.tmpl")
 }
-func About(w http.ResponseWriter, r *http.Request) {
+func (m *Repostory) About(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "about.page.tmpl")
 }
