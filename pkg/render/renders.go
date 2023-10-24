@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"html/template"
 	"lec_1/pkg/config"
+	"lec_1/pkg/models"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -16,8 +17,9 @@ func NewTemplate(a *config.AppConfig) {
 	app = a
 }
 
-func RenderTemplate(w http.ResponseWriter, temp string) {
+func RenderTemplate(w http.ResponseWriter, temp string, td *models.TemplateData) {
 	var tc map[string]*template.Template
+
 	if app.UseCache {
 		tc = app.TamplateCashe
 	} else {
@@ -27,11 +29,12 @@ func RenderTemplate(w http.ResponseWriter, temp string) {
 	if !ok {
 		log.Fatal("Colud not create Template")
 	}
-
 	buf := new(bytes.Buffer)
-	_ = t.Execute(buf, nil)
-
-	_, err := buf.WriteTo(w)
+	err := t.Execute(buf, td)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	_, err = buf.WriteTo(w)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,10 +1,13 @@
-package handler
+package handlers
 
 import (
 	"lec_1/pkg/config"
+	"lec_1/pkg/models"
 	"lec_1/pkg/render"
 	"net/http"
 )
+
+//send data to template
 
 var Repo *Repostory
 
@@ -23,8 +26,14 @@ func NewHandler(r *Repostory) {
 }
 
 func (m *Repostory) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.tmpl")
+	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 func (m *Repostory) About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "about.page.tmpl")
+	//logic
+	StringMap := make(map[string]string)
+	StringMap["test"] = "hello again"
+
+	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+		StrinMap: StringMap,
+	})
 }
