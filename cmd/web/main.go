@@ -21,8 +21,7 @@ func main() {
 	handlers.NewHandler(repo)
 
 	render.NewTemplate(&app)
-	//http.HandleFunc("/", handlers.Repo.Home)
-	//http.HandleFunc("/about", handlers.Repo.About)
+
 	url := "127.0.0.1:8080"
 	srv := http.Server{
 		Addr:    url,
